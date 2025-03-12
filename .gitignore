@@ -1,0 +1,56 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+projectenv/
+.env/
+.venv/
+env/
+ENV/
+
+# VS Code settings
+.vscode/
+
+# Environment files
+.env
+*.env
+
+# OS/system files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Python egg info
+*.egg-info/
+dist/
+build/
+
+# Jupyter notebook checkpoints (if any)
+.ipynb_checkpoints/
+
+# Pypi distribution files
+*.tar.gz
+*.whl
+
+# Data/output folders (optional, if they should not go to repo)
+data/vectordb/
+data/docs
+data/docs_2
+data/**/*.chroma/
+
+# Compiled files or binaries (if you build any)
+*.exe
+*.dll
+*.out
+*.app
+
+# Conda environment
+conda_env_requirements.txt
