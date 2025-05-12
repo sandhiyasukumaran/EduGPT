@@ -11,10 +11,10 @@ EduGPT is a RAG-based chatbot designed to provide accurate, context-aware answer
 **1. Document-Based Information Retrieval**
 Retrieves and generate context-aligned answers from educator-uploaded materials
 
-2. Real-Time Document Upload
+**2. Real-Time Document Upload**
 Students can upload their own personal notes or reference materials so they can utilize the chatbot for personalized learning
 
-3. Display References
+**3. Display References**
 Shows source document name, page numbers, text, and clickable links so users can verify and trace responses back to original content
 
 
@@ -46,13 +46,13 @@ Shows source document name, page numbers, text, and clickable links so users can
 
 6. Run the application:
 
-In terminal 1:
+   In terminal 1:
 
    ```bash
    python src\serve.py
    ```
 
-In terminal 2:
+   In terminal 2:
 
    ```bash
    python src\raggpt_app.py
