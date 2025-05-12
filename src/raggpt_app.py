@@ -50,7 +50,7 @@ with gr.Blocks() as demo:
                         [],
                         elem_id="chatbot",
                         bubble_full_width=False,
-                        height=500,
+                        height=700,
                         avatar_images=(
                             ("images/student.jpg"), "images/openai_.png"),
                         # render=False
@@ -78,26 +78,41 @@ with gr.Blocks() as demo:
                     value="References")
                 btn_toggle_sidebar.click(UISettings.toggle_sidebar, [sidebar_state], [
                     reference_bar, sidebar_state])
-                upload_btn = gr.UploadButton(
-                    "📁 Upload PDF or doc files", file_types=[
-                        '.pdf',
-                        '.doc'
-                    ],
-                    file_count="multiple")
-                temperature_bar = gr.Slider(minimum=0, maximum=1, value=0, step=0.1,
-                                            label="Temperature", info="Choose between 0 and 1")
+                
                 rag_with_dropdown = gr.Dropdown(
-                    label="RAG with", choices=["Preprocessed doc", "Upload doc: Process for RAG"], value="Preprocessed doc")
+                    label="RAG with", choices=["Preprocessed doc", "Upload doc: Process for RAG"], value="Preprocessed doc", interactive=True)
+                
+                upload_btn = gr.UploadButton(
+                    "📁 Upload PDF", file_types=[
+                        '.pdf'
+                    ],
+                    file_count="multiple", visible=False)
+                
+                #    Function to show/hide upload_btn
+                # -------------------------------------
+                def toggle_upload(mode):
+                    if mode =="Upload doc: Process for RAG":
+                        return gr.update(visible=True)
+                    else:
+                        return gr.update(visible=False)
+
+                # Trigger the toggle each time docs_mode changes
+                rag_with_dropdown.change(
+                    toggle_upload,
+                    inputs=[rag_with_dropdown],
+                    outputs=[upload_btn]
+                )
+                uploaded_files_state = gr.State([])
                 clear_button = gr.ClearButton([input_txt, chatbot])
             ##############
             # Process:
             ##############
             file_msg = upload_btn.upload(fn=UploadFile.process_uploaded_files, inputs=[
-                upload_btn, chatbot, rag_with_dropdown], outputs=[input_txt, chatbot], queue=False)
+                upload_btn, chatbot, rag_with_dropdown, uploaded_files_state], outputs=[input_txt, chatbot, uploaded_files_state], queue=False)
 
             txt_msg = input_txt.submit(fn=ChatBot.respond,
                                        inputs=[chatbot, input_txt,
-                                               rag_with_dropdown, temperature_bar],
+                                               rag_with_dropdown],
                                        outputs=[input_txt,
                                                 chatbot, ref_output],
                                        queue=False).then(lambda: gr.Textbox(interactive=True),
@@ -105,7 +120,7 @@ with gr.Blocks() as demo:
 
             txt_msg = text_submit_btn.click(fn=ChatBot.respond,
                                             inputs=[chatbot, input_txt,
-                                                    rag_with_dropdown, temperature_bar],
+                                                    rag_with_dropdown],
                                             outputs=[input_txt,
                                                      chatbot, ref_output],
                                             queue=False).then(lambda: gr.Textbox(interactive=True),

@@ -8,6 +8,7 @@ import re
 import ast
 import html
 from utils.load_config import LoadConfig
+import urllib.parse
 
 APPCFG = LoadConfig()
 
@@ -125,7 +126,7 @@ class ChatBot:
             content = re.sub(r'Â·', '·', content)
             content = re.sub(r'ï¬', 'fl', content)
 
-            pdf_url = f"{server_url}/{os.path.basename(metadata_dict['source'])}"
+            pdf_url = f"{server_url}/{urllib.parse.quote(os.path.basename(metadata_dict['source']))}"
 
             # Append cleaned content to the markdown string with two newlines between documents
             markdown_documents += f"# Retrieved content {counter}:\n" + content + "\n\n" + \
